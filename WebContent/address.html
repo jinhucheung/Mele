@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,user-scalable=no,initial-scale=1.0">
+<title>饿了么-收货地址</title>
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<!--  <script type="text/javascript" src="js/resize.js"></script> -->
+<script>
+	//获取用户信息
+	$.ajax({
+		url : "http://localhost:8080/mele/apis/UserServlet",
+		type : "get",
+		data : {
+			func : "isLogining",
+		},
+		dataType : "json",
+		success : function callback(result) {
+			console.log(result);
+			if ("200" != result.code) {
+				console.log("请求商家信息失败!! resultCode=" + result.code);
+				return;
+			}
+
+			requestUserAddressInfo(result.data);
+		}
+	});
+
+	//获取用户收货地址信息
+	function requestUserAddressInfo(mCurAccount) {
+		$.ajax({
+			url : "http://localhost:8080/mele/apis/UserAddressServlet",
+			type : "get",
+			data : {
+				func : "getUserAddressByAccount",
+				account : mCurAccount
+			},
+			dataType : "json",
+			success : function callback(result) {
+				console.log(result);
+				if ("200" != result.code) {
+					console.log("请求商家信息失败!! resultCode=" + result.code);
+					return;
+				}
+
+				$("#address").html("");
+				for ( var i in result.data) {
+					var infoDiv = build_userAddress_info_div(result.data[i].addressId,//
+							result.data[i].userContact,//
+							result.data[i].userTel,//
+							result.data[i].userAddress);
+					$("#address").append(infoDiv);
+				}
+			}
+		});
+	}
+	
+	$().ready(function(){
+		$("#address").html("");
+	});
+</script>
+
+
+</head>
+
+<body>
+	<div class="e-layout account-mar">
+		<header class="e-header">
+			<div class="e-header-box account-h">
+				<a class="back-l" href="user.html"></a>
+				<p class="account-p">收货地址</p>
+			</div>
+		</header>
+		<div id="address">
+			<div class="address-demail">
+				<ul>
+					<li class="clearfix">
+						<div class="address-item">
+							<p>
+								<span>小明</span> <span>18813912345</span>
+							</p>
+							<p>嘉应学院梅江区梅松路10号</p>
+						</div> <a href="#" class="img-right"><img src="images/ic_pan.png"></a>
+					</li>
+				</ul>
+			</div>
+			<div class="address-demail mt">
+				<ul>
+					<li class="clearfix">
+						<div class="address-item">
+							<p>
+								<span>小明</span> <span>18813912345</span>
+							</p>
+							<p>嘉应学院梅江区梅松路10号</p>
+						</div> <a href="#" class="img-right"> <img
+							src="images/address-up.png"> <span>需要升级</span>
+					</a>
+					</li>
+				</ul>
+			</div>
+			<div class="address-demail mt">
+				<ul>
+					<li class="clearfix">
+						<div class="address-item">
+							<p>
+								<span>小明</span> <span>18813912345</span>
+							</p>
+							<p>嘉应学院梅江区梅松路10号</p>
+						</div> <a href="#" class="img-right"> <img
+							src="images/address-up.png"> <span>需要升级</span>
+					</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<footer class="e-footer ht">
+			<ul class="e-footer-box address-footer">
+				<li class="address-link"><img src="images/ic_add.png"> <span>新增地址</span>
+				</li>
+			</ul>
+		</footer>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<title>商家信息页</title>
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/client(1).css">
+<script type="text/javascript" src="js/util.js"></script>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="js/client.js"></script>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+	<div class="box mask"></div>
+	<div class="container box">
+		<nav class="navbar navbar-default navbar-fixed-top nav-width">
+			<div class="container clear-bottom box">
+				<div class="row nav-top-title">
+					<div class="col-xs-2 ver-align nav-top-icon">
+						<a href="index.html"> <span
+							class="glyphicon glyphicon-menu-left change-icon"></span>
+						</a>
+					</div>
+					<div class="col-xs-8 ver-align">
+						<p class="text-center p-style" id="storeName">台式风味</p>
+					</div>
+					<div class="col-xs-2 ver-align nav-top-icon">
+						<a href="#"> <span
+							class="glyphicon glyphicon-option-horizontal change-icon"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<ul class="nav-item clearfix">
+				<li id="product" class="active"><a href="#">商品</a></li>
+				<li id="evaluation"><a href="#">评价</a></li>
+				<li id="business"><a href="#">商家</a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="container box pb" id="product-box">
+		<div class="row">
+			<div class="col-xs-3 nav-left">
+				<nav id="nav-left" role="navigation">
+					<ul class="nav nav-stacked" id="FoodType">
+						<li role="presentation" class="now"><a href="#announce">餐厅公告</a></li>
+
+					</ul>
+				</nav>
+			</div>
+			<div id="MenuHolder"
+				class="col-xs-9 pull-right clearPadding nav-right">
+				<div class="panel right-nav-item">
+					<div class="panel-heading">
+						<h3 id="announce" class="panel-title">餐厅公告</h3>
+					</div>
+					<ul class="list-group">
+						<li class="list-group-item" id="notice">
+							<p>欢迎光临，用餐高峰期请提前下单，谢谢。</p>
+						</li>
+						<li class="list-group-item" id="tel">
+							<p>联系电话 611350,661725</p>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+		<!--这里是购物车-->
+		<div id="theShopCar" class="container box popover-box clearPadding">
+			<div class="row">
+				<div class="col-x-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							购物车
+							<div class="pull-right" id="clearAll">
+								<span class="glyphicon glyphicon-trash clear-icon"></span>清空
+							</div>
+						</div>
+						<ul class="list-group" id="myShopCar">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--这里是购物车结束-->
+		<nav id="grayShopCarBar"
+			class="navbar navbar-default navbar-fixed-bottom nav-bottom nav-width">
+
+			<div class="container clearPadding">
+
+				<div class="row cart " style="position: relative">
+					<div class="col-xs-6">
+						<img id="icon-car" src="images/shopping-cart1.png" /> <span>&yen;</span>
+						<span id="Prices">0</span>
+					</div>
+					<div class="col-xs-offset-7">
+						<div class="pull-right btn-startPrice">
+							<span>&yen;</span> <span id="startPrice">20</span> <span>起送</span>
+						</div>
+						<div class="pull-right btn-goBuy" style="display: none">
+							<span id="check">去结算</span>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</nav>
+	</div>
+
+	<div class="container box evaluation hidden" id="evaluation-box">
+		<div class="btn-toolbar evaluation-bar" role="toolbar"
+			aria-label="...">
+			<div class="btn-group btn-group" role="group" aria-label="...">
+				<button type="button" class="btn btn-default">全部(996)</button>
+			</div>
+			<div class="btn-group btn-group" role="group" aria-label="...">
+				<button type="button" class="btn btn-default">满意(896)</button>
+			</div>
+			<div class="btn-group btn-group" role="group" aria-label="...">
+				<button type="button" class="btn btn-default">不满意(100)</button>
+			</div>
+		</div>
+		<!--	<div class="media">
+			<div class="media-left">
+				<a href="#"> <img class="media-object img-circle"
+					src="images/ic_headIc.png" alt="...">
+				</a>
+			</div>
+			<div class="media-body">
+				<div class="media-heading clearfix">
+					<span class="evaluation-username">4*******6</span> <span
+						class="pull-right evaluation-time"><time
+							datetime=2016-05-26 17:43 pubdate>2016-05-26 17:43</time></span>
+				</div>
+				<p class="evaluate text-muted bg-info">
+					<span>评论：</span> 好吃
+				</p>
+				<p class="evaluate bg-success text-muted">
+					<span>商家回复:</span>谢谢
+				</p>
+			</div>
+		</div>
+		<div class="media">
+			<div class="media-left">
+				<a href="#"> <img class="media-object img-circle"
+					src="images/ic_headIc.png" alt="...">
+				</a>
+			</div>
+			<div class="media-body">
+				<div class="media-heading clearfix">
+					<span class="evaluation-username">4*******6</span> <span
+						class="pull-right evaluation-time"><time
+							datetime=2016-05-26 17:43 pubdate>2016-05-26 17:43</time></span>
+				</div>
+				<p class="evaluate text-muted bg-info">
+					<span>评论：</span> 吃吃
+				</p>
+				<p class="evaluate bg-success text-muted">
+					<span>商家回复:</span>谢谢
+				</p>
+			</div>
+		</div>-->
+	</div>
+	<div class="container box business-infor hidden" id="business-box">
+		<div class="row business-infor-title">
+			<div class="col-xs-4"
+				style="padding-left: 10px; padding-right: 10px;">
+				<span class="text-center">起送价</span>
+				<h4 class="text-center" id="txt-startPrice">
+					0<small>元</small>
+				</h4>
+			</div>
+			<div class="col-xs-4 "
+				style="padding-left: 10px; padding-right: 10px;">
+				<span class="text-center">配送费</span>
+				<h4 class="text-center" id="txt-transportprice">
+					30<small>元</small>
+				</h4>
+			</div>
+			<div class="col-xs-4"
+				style="padding-left: 10px; padding-right: 10px;">
+				<span class="text-center">平均配送时间</span>
+				<h4 class="text-center">
+					35<small>分钟</small>
+				</h4>
+			</div>
+			<div class="clearfix visible-xs-block"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 panel announce-item clearPadding">
+				<!-- Default panel contents -->
+				<div class="panel-heading">公告与活动</div>
+				<!-- List group -->
+				<ul class="list-group">
+					<li class="list-group-item cut" id="storeCut">在线满20减10</li>
+					<li class="list-group-item first" id="storeFillCut">在线满20减10</li>
+				</ul>
+
+				<div
+					class="col-xs-12 panel announce-item clearPadding business-panel">
+					<!-- Default panel contents -->
+					<div class="panel-heading">商家信息</div>
+					<!-- List group -->
+					<ul class="list-group">
+						<li class="list-group-item" id="notice">地道台式特色风味，欢迎品尝</li>
+						<li class="list-group-item" id="storeType">分类：盖浇饭</li>
+						<li class="list-group-item" id="address">地址：梅州市梅江区东郊乡（金山办）东街村门店</li>
+						<li class="list-group-item" id="shopHours">营业时间：10:10-19:50</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/jquery-1.12.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script>
+		//商家Id
+		var mStoreId = get_url_param("id");
+
+		//获取菜式数据
+		$.ajax({
+			url : "http://localhost:8080/mele/apis/StoreMenuServlet",
+			type : "get",
+			data : {
+				func : "fetchAllFoodTypeByStoreId",
+				storeId : mStoreId
+			},
+			async : false,
+			dataType : "json",
+			success : function callback(result) {
+				console.log(result);
+				for ( var i in result.data) {
+					$("#FoodType").append(
+							FoodTypeModel(result.data[i], "FoodType" + i));
+					requestAllFoodByType(result.data[i], "FoodType" + i);
+				}
+
+			}
+		});
+
+		function requestAllFoodByType(mFoodType, mFoodTypeId) {
+			$.ajax({
+				url : "http://localhost:8080/mele/apis/StoreMenuServlet",
+				type : "get",
+				data : {
+					func : "fetchAllFoodsByFoodType",
+					storeId : mStoreId,
+					foodType : mFoodType
+				},
+				dataType : "json",
+				async : false,
+				success : function callback(result) {
+					$("#MenuHolder")
+							.append(
+									PageModelOfMenu(mFoodType, result.data,
+											mFoodTypeId));
+				}
+			});
+		}
+
+		$('a[href^="#"][href!="#"]').click(function() {
+			var target = document.getElementById(this.hash.slice(1));
+			if (!target)
+				return;
+			var targetOffset = $(target).offset().top - 130;
+			$('html,body').animate({
+				scrollTop : targetOffset
+			}, 400);
+			return false;
+		});
+
+		$(function() {
+			$("#product").click(function() {
+				$("#product-box").show();
+				$("#product").addClass('active');
+				$("#evaluation-box").hide();
+				$("#evaluation").removeClass('active');
+				$("#business-box").hide();
+				$("#business").removeClass('active');
+			});
+			$("#evaluation").click(function() {
+				$("#evaluation-box").removeClass('hidden');
+				$("#evaluation").addClass('active');
+				$("#evaluation-box").show();
+				$("#product-box").hide();
+				$("#product").removeClass('active');
+				$("#business-box").hide();
+				$("#business").removeClass('active');
+			});
+			$("#business").click(function() {
+				$("#business-box").removeClass('hidden');
+				$("#business").addClass('active');
+				$("#business-box").show();
+				$("#evaluation-box").hide();
+				$("#evaluation").removeClass('active');
+				$("#product-box").hide();
+				$("#product").removeClass('active');
+			});
+			$("#nav-left>ul>li").hover(function() {
+				$(this).addClass('now');
+			}, function() {
+				$(this).removeClass("now");
+			});
+		})
+
+		$(".cut-con").hide();
+		$(".mask").hide();
+		$(".food-amount").hide();
+		$("#theShopCar").hide();
+		/**
+		 * 添加至购物车
+		 * @param name
+		 * @param price
+		 * @param amount
+		 */
+		function appendToCar(id, name, price, amount) {
+			var model = "<li id='" +
+                    id +
+                    "' class='list-group-item foodGroup'> "
+					+ "<span class='food-type'>"
+					+ name
+					+ "</span> "
+					+ "<span class='popover-price'>"
+					+ "<small>¥</small>"
+					+ price
+					+ "</span> "
+					+ "<span id='myCut_" +
+                   id +
+                    "' class=' cutStyle' orderId='" +
+                    id +
+                    "'>-</span> "
+					+ "<span class='food-amount' id='mamount_" +
+                    id +
+                    "'>"
+					+ amount
+					+ "</span> "
+					+ "<span orderId='" +
+                    id +
+                    "' id='myAdd_" +
+                    id +
+                    "' class='glyphicon glyphicon-plus bottom-icon' aria-hidden='true'>"
+					+ "</span> </li>";
+			$("#myShopCar").append(model);
+			$("#myCut_" + id).click(function() {
+				var orderId = $(this).attr("orderId");
+				var strPrice = $("#price_" + orderId).text();
+				var price = parseFloat(strPrice.substring(1, strPrice.length));
+				var allPrice = $("#Prices").text();
+				var allPrice = parseFloat(allPrice);
+				allPrice -= price;
+				$("#Prices").text("" + allPrice.toFixed(2));
+
+				if (allPrice <= 0) {
+					$(".mask").toggle();
+					$("#theShopCar").toggle();
+				}
+				var amount = parseInt($("#amount_" + orderId).text());
+				amount--;
+
+				$("#mamount_" + orderId).text(amount);
+				$("#amount_" + orderId).text(amount);
+				if (amount <= 0) {
+					$("#cut_" + orderId).hide();
+					$("#amount_" + orderId).hide();
+					$("#" + orderId).remove();
+				}
+			});
+
+			$("#myAdd_" + id).click(function() {
+				var orderId = $(this).attr("orderId");
+				var strPrice = $("#price_" + orderId).text();
+				var price = parseFloat(strPrice.substring(1, strPrice.length));
+				var allPrice = $("#Prices").text();
+				var allPrice = parseFloat(allPrice);
+				allPrice += price;
+				$("#Prices").text("" + allPrice.toFixed(2));
+				var amount = parseInt($("#amount_" + orderId).text());
+
+				amount++;
+				$("#mamount_" + orderId).text(amount);
+				$("#amount_" + orderId).text(amount);
+			});
+		}
+
+		$("#clearAll").click(function() {
+			$(".foodGroup").remove();
+			$(".food-amount").text("0");
+			$(".cut-con").hide();
+			$(".food-amount").hide();
+			$("#Prices").text("" + 0);
+			$("#theShopCar").toggle();
+			$(".mask").toggle();
+		});
+		$("#icon-car").click(function() {
+			var allPrice = $("#Prices").text();
+			var allPrice = parseFloat(allPrice);
+			if (allPrice <= 0)
+				return;
+			$(".mask").toggle();
+			$("#theShopCar").toggle();
+		});
+
+		/**
+		 * 订单页面 购物车实现
+		 */
+		$(".cut-con").click(function() {
+			var orderId = $(this).attr("orderId");
+			var strPrice = $("#price_" + orderId).text();
+			var price = parseFloat(strPrice.substring(1, strPrice.length));
+			var food = $("#food_" + orderId).text();
+			var amount = parseInt($("#amount_" + orderId).text());
+			amount--;
+			if (amount <= 0) {
+				$("#cut_" + orderId).hide();
+				$("#amount_" + orderId).hide();
+			}
+			$("#amount_" + orderId).text(amount);
+			var allPrice = $("#Prices").text();
+			var allPrice = parseFloat(allPrice);
+			allPrice -= price;
+			$("#Prices").text("" + allPrice.toFixed(2));
+			var startPrice = parseFloat($("#startPrice").text()).toFixed(2);
+			if (allPrice < startPrice) {
+				$(".btn-startPrice").show();
+				$(".btn-goBuy").hide();
+			}
+			allPrice = allPrice.toFixed(2);
+
+			$("#" + orderId).remove();
+			if (amount > 0)
+				appendToCar(orderId, food, price, amount);
+
+			//console.log(amount + ":" + food + ":" + price * amount + ":");
+		});
+		$(".add-con").click(function() {
+
+			var orderId = $(this).attr("orderId");
+			$("#cut_" + orderId).show();
+			$("#amount_" + orderId).show();
+			var strPrice = $("#price_" + orderId).text();
+			var price = parseFloat(strPrice.substring(1, strPrice.length));
+			var food = $("#food_" + orderId).text();
+			var amount = parseInt($("#amount_" + orderId).text());
+			amount++;
+			$("#amount_" + orderId).text(amount);
+			var allPrice = $("#Prices").text();
+			var allPrice = parseFloat(allPrice);
+			allPrice += price;
+			var startPrice = parseFloat($("#startPrice").text()).toFixed(2);
+			if (allPrice >= startPrice) {
+				$(".btn-startPrice").hide();
+				$(".btn-goBuy").show();
+			}
+			$("#Prices").text("" + allPrice.toFixed(2));
+			console.log(amount + ":" + food + ":" + price * amount + ":");
+			$("#" + orderId).remove();
+			appendToCar(orderId, food, price, amount);
+
+		});
+
+		/* 评论的ajax请求*/
+		$
+				.ajax({
+					url : "http://localhost:8080/mele/apis/OrderServlet?func=fetchAllOrderInStore",
+					type : "get",
+					data : {
+						storeId : mStoreId
+					},
+					dataType : "json",
+					async : false,
+					success : function(res) {
+						console.log(res);
+						for ( var i in res.data) {
+							$(".evaluation").append(
+									PageCommentModel("headIc" + i,
+											"images/ic_headIc.png",
+											res.data[i].userAccount,
+											res.data[i].orderTime,
+											res.data[i].comment));
+
+							//requestUserInfo(res.data[i].userAccount,"#headIc"+i);
+						}
+					},
+					error : function() {
+						alert("网络连接失败了");
+					}
+				});
+		//评论模板文件
+		function PageCommentModel(divId, headIcon, user, date, comment) {
+			var Model = " <div class='media'> <div class='media-left'> <a href='#'> <img class='media-object img-circle' src='" +
+                    headIcon +"' id='"+divId+//
+                    "' alt='...'></img></a> </div> <div class='media-body'> <div class='media-heading clearfix'> <span class='evaluation-username'>"
+					+ user
+					+ "</span> <span class='pull-right evaluation-time'><time datetime='2016-05-26' 17:43='' pubdate=''>"
+					+ date
+					+ "</time></span> </div> <p class='evaluate text-muted bg-info'> <span>评论：</span> "
+					+ comment + "</p>  </div> </div>"
+			return Model;
+		}
+
+		/* 商家的信息的ajax请求*/
+		$
+				.ajax({
+					url : "http://localhost:8080/mele/apis/StoreServlet?func=fetchStoreByStoreId",
+					type : "get",
+					data : {
+						storeId : mStoreId
+					},
+					dataType : "json",
+					async : false,
+					success : function(res) {
+						//console.log(res);
+						$("#storeCut").text(res.data.cheapenNotice);
+						$("#storeFillCut").text(res.data.newuserNotice);
+						$("#storeType").text("分类: " + res.data.storeType);
+						$("#shopHours").text("营业时间: " + res.data.shopHours);
+						$("#address").text("地址: " + res.data.address);
+						$("#notice").text(res.data.notice);
+						$("#txt-startPrice").html(
+								res.data.startPrice + "<small>元</small>")
+						$("#txt-transportprice").html(
+								res.data.transportPrice + "<small>元</small>");
+
+						$("#tel").html("联系电话: " + res.data.tel);
+						$("#notice").html("餐厅公告: " + res.data.notice);
+						$("#startPrice").html(res.data.startPrice);
+						$("#storeName").html(res.data.storeName);
+					},
+					error : function() {
+						alert("网络连接失败了");
+					}
+				});
+
+		/**
+		 * 菜单分类以及其所属的模板
+		 * @param Option
+		 * @param foods
+		 * @returns {string}
+		 * @constructor
+		 */
+		function PageModelOfMenu(Option, foods, mao) {
+			var model1 = "<div class='panel right-nav-item' > <div class='panel-heading'> <h3 id='" +
+                mao +
+                "' class='panel-title'>"
+					+ Option + "</h3> </div> <ul class='list-group'>";
+			var model2 = "";
+
+			for ( var i in foods) {
+				model2 += " <li class='list-group-item' name='foodli' value='"+ foods[i].foodId+"'> <p id='food_" +
+                foods[i].foodId +
+                "'>"
+						+ foods[i].foodName
+						+ "</p> <span class='glyphicon glyphicon-star' aria-hidden='true'></span> <span class='glyphicon glyphicon-star' aria-hidden='true'></span> <span class='glyphicon glyphicon-star' aria-hidden='true'></span> <span class='glyphicon glyphicon-star' aria-hidden='true'></span> <span class='glyphicon glyphicon-star' aria-hidden='true'></span> <span class='sale-amount'>月售1份</span> <p class='sale-price' id='price_" +
+                foods[i].foodId +
+                "'>¥"
+						+ foods[i].foodPrices
+						+ "</p> <span id='cut_" +
+                foods[i].foodId +
+                "' class='cut-con' orderid='" +
+                foods[i].foodId +
+                "' style='display: none;'>-</span> <span class='food-amount' id='amount_" +
+                foods[i].foodId +
+                "' style='display: none;'>0</span> <span class='add-con glyphicon glyphicon-plus bottom-icon' orderid='" +
+                foods[i].foodId +
+                "' aria-hidden='true'></span> </li> ";
+			}
+			var model3 = "</ul> </div>";
+			return model1 + model2 + model3;
+		}
+		/**
+		 * 商品左侧的类型模板
+		 * @param Type
+		 * @param mao
+		 * @returns {string}
+		 * @constructor
+		 */
+		function FoodTypeModel(Type, mao) {
+			var TypeModel = "<li role='presentation' class=''><a href='#" +
+              mao +
+              "'>"
+					+ Type + "</a></li>";
+			return TypeModel;
+		}
+
+		//获取订单用户信息
+		function requestUserInfo(mAccount, headIcDivId) {
+			$.ajax({
+				url : "http://localhost:8080/mele/apis/UserServlet",
+				type : "get",
+				data : {
+					func : "fetchUser",
+					account : mAccount
+				},
+				async : false,
+				dataType : "json",
+				success : function(res) {
+					console.log(res);
+					$("" + headIcDivId).html("");
+					//$(""+headIcDivId).src = dir_img_user+res.data.headic+"?timestamp=" + Date();
+				}
+			});
+		}
+
+		//提交订单数据
+		$("#check").click(function() {
+			var orderfoodids = "";
+			var orderfoodPriceNums = "";
+			$("li[name='foodli']").each(function() {
+					var foodid = $(this).val();
+					var foodamount = $(this).find("span[id='amount_" + foodid + "']").text();
+					var foodprice = $(this).find("p[id='price_" + foodid + "']").text();
+					foodprice=foodprice.replace(/¥/,"");
+					if ("" != foodamount && "0" != foodamount) {
+						orderfoodids += foodid + ";";
+						orderfoodPriceNums += foodprice + "x"+ foodamount + ";";
+					}
+			});
+			//console.log(orderfoodids + "   " + orderfoodPriceNums);
+			
+			//向OrderSevlet中缓存数据
+			if(""!=orderfoodids&&""!=orderfoodPriceNums){
+				$.ajax({
+					url : "http://localhost:8080/mele/apis/OrderServlet",
+					type : "get",
+					data : {
+						func : "cacheOrder",
+						orderFoodId:orderfoodids,
+						orderFoodPriceXNum:orderfoodPriceNums,
+						storeId:mStoreId
+					},
+					async : false,
+					dataType : "json",
+					success : function(res) {
+						console.log(res);
+						if("200"!=res.code){
+							console.log("缓存订单数据失败!!code="+res.code);
+							return ;
+						}
+						//跳转页面
+						 window.location.href="booking.html";
+					}
+				});
+			}
+		});
+	</script>
+</body>
+
+</html>

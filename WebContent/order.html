@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,user-scalable=no,initial-scale=1.0">
+<title>饿了么-订单</title>
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet"
+	href="http://at.alicdn.com/t/font_1465275982_6870668.css">
+<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<!--  <script type="text/javascript" src="js/resize.js"></script> -->
+<script>
+	//获取当前用户信息
+	$.ajax({
+		url : "http://localhost:8080/mele/apis/UserServlet",
+		type : "get",
+		data : {
+			func : "isLogining"
+		},
+		dataType : "json",
+		success : function callback(result) {
+			//console.log(result);
+			if ("200" != result.code) {
+				console.log("请求商家信息失败!! resultCode=" + result.code);
+				return;
+			}
+			requestOrderInCurAccount(result.data);
+		}
+	});
+
+	//获取当前用户所有的顶点信息
+	function requestOrderInCurAccount(mCurAccount) {
+		$.ajax({
+			url : "http://localhost:8080/mele/apis/OrderServlet",
+			data : {
+				func : "fetchAllOrderInAccount",
+				account : mCurAccount
+			},
+			dataType : "json",
+			success : function callback(result) {
+				console.log(result);
+				if ("200" != result.code) {
+					console.log("请求商家信息失败!! resultCode=" + result.code);
+					return;
+				}
+
+				$("#orderDiv").html("");
+				//获取用户订单
+				for ( var i in result.data) {
+					//获取菜式数量与订单总价
+					var totalPrice = 0.0;
+					var mPriceArray = new Array();
+					var mNumArray = new Array();
+					var foodPriceNum = result.data[i].orderFoodPriceXNum;
+
+					get_order_foods_price_nums(foodPriceNum, mPriceArray,
+							mNumArray); //获取菜式数量价格字符串
+					totalPrice = cal_order_foods_total_price(mPriceArray,
+							mNumArray); //获取订单总价
+					var orderinfoDiv=build_orderInfo_div(i, result.data[i].orderCode,//
+							result.data[i].orderTime,//
+							result.data[i].mStore,//
+							result.data[i].mFoods, //
+							mNumArray,//
+							totalPrice);
+					$("#orderDiv").append(orderinfoDiv);
+				}
+			}
+		});
+	}
+	
+	$().ready(function(){
+		$("#orderDiv").html("");
+	})
+</script>
+</head>
+
+<body>
+	<div class="e-layout mar-top">
+		<header class="e-header">
+			<div class="e-header-box ht order-header">
+				<a ="#" class="order-head-title-center">订单</a> <a href="#"
+					class="order-head-title-r"> 早餐订单 </a>
+			</div>
+		</header>
+		<!-- 订单内容 -->
+		<div class="order-content" id="orderDiv">
+			<div class="order-info">
+				<div class="order-info-head">
+					<p>
+						&nbsp;&nbsp;订单已完成&nbsp; <span class="order-info-head-time">2016-06-09&nbsp;11:26:19</span>
+					</p>
+					<a class="order-recycle" href="#"> <img
+						src="images/recycle.png" alt="删除" />
+					</a>
+				</div>
+				<div class="order-detail">
+					<div class="order-detail-left">
+						<img
+							src="https://fuss10.elemecdn.com/0/ab/1de188141fdf03952acf7019a8fa9jpg.jpg?imageMogr2/thumbnail/70x70/format/webp/quality/85">
+					</div>
+					<div class="order-detail-right">
+						<a href="#">&nbsp;台式风味&nbsp;&gt</a>
+						<div>
+							<span>&nbsp;豆角肉末</span> <span class="num">&times;1&nbsp;&nbsp;</span>
+						</div>
+						<div>
+							<span>&nbsp;辣子鸡</span> <span class="num">&times;1&nbsp;&nbsp;</span>
+						</div>
+						<div>
+							<span>&nbsp;鸡腿菇</span> <span class="num">&times;1&nbsp;&nbsp;</span>
+						</div>
+						<div>
+							<span>&nbsp;苦瓜炒蛋</span> <span class="num">&times;1&nbsp;&nbsp;</span>
+						</div>
+						<div class="order-money">
+							共4份，实付<span>&yen;29.00</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="order-info">
+				<div class="order-info-head">
+					<p>
+						&nbsp;&nbsp;订单已完成&nbsp; <span class="order-info-head-time">2016-06-09&nbsp;11:26:19</span>
+					</p>
+					<a class="order-recycle" href="#"> <img
+						src="images/recycle.png" alt="删除" />
+					</a>
+				</div>
+				<div class="order-detail">
+					<div class="order-detail-left">
+						<img
+							src="https://fuss10.elemecdn.com/b/cc/ac6c106cb0df8e345a45dc3fd3279jpeg.jpeg?imageMogr/quality/75/format/webp/thumbnail/!96x96r/gravity/Center/crop/96x96/">
+					</div>
+					<div class="order-detail-right">
+						<a href="#">&nbsp;老强明回味餐馆&nbsp;&gt</a>
+						<div>
+							<span>&nbsp;凉拌黄瓜</span> <span class="num">&times;1&nbsp;&nbsp;</span>
+						</div>
+						<div>
+							<span>&nbsp;辣子鸡</span> <span class="num">&times;2&nbsp;&nbsp;</span>
+						</div>
+						<div>
+							<span>&nbsp;肉片饭</span> <span class="num">&times;1&nbsp;&nbsp;</span>
+						</div>
+						<div class="order-money">
+							共4份，实付<span>&yen;32.00</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="order-info">
+				<div class="order-info-head">
+					<p>
+						&nbsp;&nbsp;订单已完成&nbsp; <span class="order-info-head-time">2016-06-09&nbsp;11:26:19</span>
+					</p>
+					<a class="order-recycle" href="#"> <img
+						src="images/recycle.png" alt="删除" />
+					</a>
+				</div>
+				<div class="order-detail">
+					<div class="order-detail-left">
+						<img
+							src="https://fuss10.elemecdn.com/e/86/251ac76c99f20dfcaea560ac45810jpeg.jpeg?imageMogr/quality/75/format/webp/thumbnail/!96x96r/gravity/Center/crop/96x96/">
+					</div>
+					<div class="order-detail-right">
+						<a href="#">&nbsp;至尊堡&nbsp;&gt</a>
+						<div>
+							<span>&nbsp;鸡肉卷</span> <span class="num">&times;3&nbsp;&nbsp;</span>
+						</div>
+						<div>
+							<span>&nbsp;牛肉汉堡</span> <span class="num">&times;2&nbsp;&nbsp;</span>
+						</div>
+						<div>
+							<span>&nbsp;双层鸡排汉堡</span> <span class="num">&times;1&nbsp;&nbsp;</span>
+						</div>
+						<div class="order-money">
+							共6份，实付<span>&yen;37.00</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 再来一单 -->
+		<div class="order-button">
+			<div class="ordder-all clearfix">
+			<input type="button" id="order" name="order" value="再来一单" />
+			</div>
+		</div>
+
+		<!-- 底部导航行 -->
+		<footer class="e-footer ht">
+			<ul class="e-footer-box">
+				<li><a href="index.html"><i
+						class="iconfont icon-exin e-footer-icon"></i>外卖</a></li>
+				<li><a href="order.html"><i
+						class="iconfont icon-dingdan e-footer-icon"></i>订单</a></li>
+				<li><a href="user.html"><i
+						class="iconfont icon-geren e-footer-icon"></i>我的</a></li>
+			</ul>
+		</footer>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,user-scalable=no,initial-scale=1.0">
+<title>饿了么-订单</title>
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<!--  <script type="text/javascript" src="js/resize.js"></script> -->
+
+<script type="text/javascript">
+	var mStoreId = 1;
+	//订单信息
+	var mOrderInfo = null;
+
+	$.ajax({
+		url : "http://localhost:8080/mele/apis/OrderServlet",
+		type : "get",
+		data : {
+			func : "readCacheOrder"
+		},
+		async : false,
+		dataType : "json",
+		success : function(res) {
+			console.log(res);
+			if ("200" != res.code) {
+				console.log("读取缓存订单数据失败!!code=" + res.code);
+				return;
+			}
+
+			mStoreId = res.data.storeId;
+			mOrderInfo = res.data;
+
+			requestAddressInfo();
+
+		}
+	});
+
+	$().ready(function() {
+		//回退页面
+		$("#back").click(function() {
+			history.back();
+		});
+
+		//提交订单
+		$("#submitOrder").click(function() {
+			$.ajax({
+				url : "http://localhost:8080/mele/apis/OrderServlet",
+				type : "get",
+				data : {
+					func : "submitCacheOrder"
+				},
+				async : false,
+				dataType : "json",
+				success : function(res) {
+					console.log(res);
+					if ("200" != res.code) {
+						console.log("提交订单数据失败!!code=" + res.code);
+						return;
+					}
+					alert("提交订单成功!!");
+					window.location.href="user.html";
+				}
+			});
+		});
+	});
+
+	function requestAddressInfo() {
+		$.ajax({
+			url : "http://localhost:8080/mele/apis/UserAddressServlet",
+			type : "get",
+			data : {
+				func : "fetchAllUserAddressByAccount",
+				account : mOrderInfo.userAccount
+			},
+			async : true,
+			dataType : "json",
+			success : function(res) {
+				console.log(res);
+				if ("200" != res.code) {
+					console.log("读取用户收货地址信息失败!!code=" + res.code);
+					return;
+				}
+				for ( var i in res.data) {
+					if (mOrderInfo.userAddressId == res.data[i].addressId) {
+						//console.log("id="+res.data[i].addressId+"  userContact="+res.data[i].userContact+"   userTel="+res.data[i].userTel+"  uerAddress="+res.data[i].userAddress);
+						$("#userContact").text(res.data[i].userContact);
+						$("#tel").text(res.data[i].userTel);
+						$("#userAddress").text(res.data[i].userAddress);
+						break;
+					}
+				}
+				handleOrder();
+			}
+		});
+	}
+
+	function handleOrder() {
+		//获取菜式数量与订单总价
+		var mtotalPrice = 0.0;
+		var mPriceArray = new Array();
+		var mNumArray = new Array();
+		var foodPriceNum = mOrderInfo.orderFoodPriceXNum;
+		get_order_foods_price_nums(foodPriceNum, mPriceArray, mNumArray); //获取菜式数量价格字符串
+		mtotalPrice = cal_order_foods_total_price(mPriceArray, mNumArray); //获取订单总价
+
+		$("#price1").text("¥" + mtotalPrice);
+		$("#price2").text("¥" + mtotalPrice);
+		$("#price3").text("¥" + mtotalPrice);
+
+		for ( var i in mOrderInfo.mFoods) {
+			var foodli = "<li class='li-common clearfix changeli-color'>"//
+					+ "<span>"//
+					+ mOrderInfo.mFoods[i].foodName//
+					+ "</span>"//
+					+ "<span class='order-count-amount'>"//
+					+ "*" + mNumArray[i]//
+					+ "</span>"//
+					+ "<span class='fr'>"//
+					+ "¥" + mPriceArray[i]//
+					+ "</span>"//
+					+ "</li>";
+			$("#foodlis").append(foodli);
+		}
+	}
+</script>
+
+<style>
+.order-init-title {
+	margin: 0 auto;
+	padding-left: 0;
+	text-align: center;
+}
+
+.order-init li {
+	height: 0.8rem;
+}
+
+.order-init .address-item>p:first-child {
+	line-height: 0.3rem
+}
+
+.order-init .address-item>p:nth-child(2) {
+	line-height: 0.3rem
+}
+
+.order-init .img-right {
+	margin-top: 0.2rem;
+}
+
+.order-init .img-right>img {
+	width: 0.14rem;
+	height: 0.14rem;
+}
+
+.pay-style {
+	float: right;
+}
+
+.pay-style img {
+	width: 0.25rem;
+	height: 0.25rem;
+	display: inline-block;
+	margin-top: 0.04rem;
+}
+
+.order-init-item .demail-title {
+	color: #505050 !important;
+	font-size: 0.18rem !important;
+}
+
+.order-init-item .li-common {
+	height: 0.45rem !important;
+	line-height: 0.45rem !important;
+}
+
+.order-count {
+	margin-bottom: 0.7rem;
+}
+
+.order-count h3 {
+	color: #474747 !important;
+}
+
+.order-count h3 span {
+	color: #E7A165 !important;
+}
+
+.order-count .li-common {
+	color: #4F4F4F;
+}
+
+.changeli-color {
+	color: #E49962 !important;
+	position: relative;
+}
+
+.changeli-color span {
+	color: #E49962 !important;
+}
+
+.order-count .order-count-amount {
+	position: absolute;
+	right: 1rem;
+}
+
+.order-init-bottom .e-footer-box {
+	background: rgba(61, 61, 61, 0.8);
+}
+
+.order-init-bottom .e-footer-box li {
+	background: none;
+	width: 100%;
+}
+
+.order-init-bottom .left-money {
+	color: #fff;
+	line-height: 0.6rem;
+	font-size: 0.28rem;
+}
+
+.right-sure {
+	display: inline-block;
+	width: 0.8rem;
+	height: 0.4rem;
+	background-color: #46DB5D;
+	color: #fff;
+	float: right;
+	font-size: 0.15rem;
+	border-radius: 0.1rem;
+	line-height: 0.4rem;
+	text-align: center;
+	margin-top: 0.05rem;
+}
+</style>
+</head>
+
+<body>
+	<div class="e-layout account-mar">
+		<header class="e-header">
+			<div class="e-header-box account-h">
+				<span class="back-l" id="back"></span>
+				<p class="account-p order-init-title">订单</p>
+			</div>
+		</header>
+		<div class="address-demail order-init">
+			<ul>
+				<li class="clearfix">
+					<div class="address-item">
+						<p>
+							<span id="userContact">小明</span> <span id="tel">18813912345</span>
+						</p>
+						<p id="userAddress">嘉应学院梅江区梅松路11号</p>
+					</div> <a href="#" class="img-right"><img
+						src="images/carat-r-white.png"></a>
+				</li>
+			</ul>
+		</div>
+		<div class="acount-detail order-init-item">
+			<h3 class="demail-title li-common">支付方式</h3>
+			<ul>
+				<li class="li-common"><span>货到付款</span> <a href="#"
+					class="pay-style"> <img src="images/form-black.png">
+				</a></li>
+				<li class="li-common"><span>在线支付</span> <a href="#"
+					class="pay-style"> <img src="images/form-green.png">
+				</a></li>
+			</ul>
+		</div>
+		<div class="acount-detail order-init-item">
+			<ul>
+				<li class="li-common"><span>送达时间</span> <a href="#" class="fr">
+						<span>09:30</span>
+				</a></li>
+			</ul>
+		</div>
+		<div class="acount-detail order-init-item">
+			<ul>
+				<li class="li-common"><span>订单备注</span> <a href="#" class="fr">
+						<span>无订单备注</span>
+				</a></li>
+			</ul>
+		</div>
+		<div class="acount-detail order-init-item order-count">
+			<h3 class="demail-title li-common clearfix">
+				订单总计 <span id="price1" class="fr"></span>
+			</h3>
+			<ul id="foodlis">
+				<li class="li-common clearfix"><span>美食金额</span> <span
+					id="price2" class="fr"></span></li>
+			</ul>
+		</div>
+		<footer class="e-footer ht order-init-bottom">
+			<ul class="e-footer-box">
+				<li><span id="price3" class="left-money"></span>
+					<button class="right-sure" style="border: none" id="submitOrder">确认下单</button></li>
+			</ul>
+		</footer>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,user-scalable=no,initial-scale=1.0">
+<title>饿了么-美食</title>
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript"
+	src="http://webapi.amap.com/maps?v=1.3&key=0f6d9c494d038b938391ce5974cc145d&plugin=AMap.Geocoder"></script>
+<!--  <script type="text/javascript" src="js/resize.js"></script> -->
+<script type="text/javascript">
+	/*用户位置经纬度*/
+	var mLocationLngLat = get_Cookie("elelocationlnglat");
+	/*城市编码*/
+	var mCityCode = get_Cookie("elelocationcitycode");
+	//商家类型Id
+	var mStoreTypeId = get_url_param("id");
+	//商家类型名
+	var mStoreName = get_url_param("name");
+
+	/*
+	 *请求获取类型=id的商家信息
+	 */
+	$.ajax({
+		url : "http://localhost:8080/mele/apis/StoreServlet",
+		type : "get",
+		data : {
+			func : "fetchAllStoresByCityCodeNTypeId",
+			storeTypeId : mStoreTypeId,
+			cityCode : mCityCode
+		},
+		dataType : "json",
+		success : function callback(result) {
+			console.log(result);
+			if ("200" != result.code) {
+				console.log("请求商家信息失败!! resultCode=" + result.code);
+				return;
+			}
+
+			//获取用户经纬度信息
+			var locationlnglat = null;
+			var distance = null;
+			if (null != mLocationLngLat) {
+				var locationArray = mLocationLngLat.split(",");
+				locationlnglat = new AMap.LngLat(locationArray[0],
+						locationArray[1]);
+			}
+
+			$("#storeDiv").html("");
+			for ( var i in result.data) {
+				//计算用户与商家间距离
+				if (null != locationlnglat) {
+					var lnglatArray = result.data[i].latlng.split(",");
+					distance = locationlnglat.distance([ lnglatArray[0],
+							lnglatArray[1] ]);
+					distance = Math.ceil(distance); //取整
+					if (distance > 10000) { //不显示距离10000米以上的商家
+						continue;
+					}
+				} else {
+					distance = " NA ";
+				}
+
+				var divcode = build_storeDiv(//
+				result.data[i].storeId,//
+				result.data[i].storeLogo, //
+				result.data[i].storeName,//
+				result.data[i].startPrice, //
+				result.data[i].transportPrice,//
+				distance,//
+				result.data[i].orderNums);
+				$("#storeDiv").append(divcode);
+			}
+		}
+	});
+
+	/*
+	 *页面加载后
+	 */
+	$().ready(function() {
+		if (null != mStoreName)
+			$("#title").html(mStoreName);
+	});
+</script>
+
+</head>
+
+<body>
+	<div class="e-layout account-mar">
+		<header class="e-header">
+			<div class="e-header-box account-h">
+				<a class="back-l" href="index.html"></a>
+				<p class="account-p" id="title">美食</p>
+			</div>
+		</header>
+		<main class="e-product">
+		<div id="storeDiv"></div>
+	</div>
+	</main>
+</body>
+
+</html>

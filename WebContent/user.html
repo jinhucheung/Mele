@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,user-scalable=no,initial-scale=1.0">
+<title>饿了么-个人</title>
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet"
+	href="http://at.alicdn.com/t/font_1465275982_6870668.css">
+<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<!--  <script type="text/javascript" src="js/resize.js"></script> -->
+<script>
+	//获取用户信息
+	$.ajax({
+		url : "http://localhost:8080/mele/apis/UserServlet",
+		type : "get",
+		data : {
+			func : "getCurAccount",
+		},
+		dataType : "json",
+		success : function callback(result) {
+			//console.log(result);
+			if ("200" != result.code) {
+				console.log("请求商家信息失败!! resultCode=" + result.code);
+				return;
+			}
+			$("#account").html(result.data.account);
+
+			if ("0" != result.data.tel) {
+				$("#tel").html(result.data.tel);
+			}
+			
+			if (null != result.data.headic && "" != result.data.headic) {
+				var imgUrl = dir_img_user + result.data.headic + "";
+				$("#ic_headIc").css({
+					"background-image" : "url('" + imgUrl + "')"
+				});
+			}
+		}
+	});
+</script>
+</head>
+
+<body>
+	<div class="e-layout mar-top">
+		<header class="e-header">
+			<div class="e-header-box ht">
+				<a href="#" class="btn btn-l changF">我的</a> <a href="#"
+					class="btn btn-r-l user-img"> <img
+					src="images/user_notice .png" />
+				</a> <a href="#" class="btn btn-r-r user-img"> <img
+					src="images/ic_setting.png" />
+				</a>
+			</div>
+		</header>
+		<div class="user-show clearfix">
+			<dl class="user-show-l">
+				<dt id="ic_headIc"
+					style="background-image: url('images/ic_headIc.png')"></dt>
+				<dd class="user-show-l-r">
+					<span id="account">用户名</span> <span id="tel">*****</span>
+				</dd>
+			</dl>
+			<a href="account.html" class="user-show-r acc-to-btn"> <img
+				src="images/ic_arrow_r.png" />
+			</a>
+		</div>
+		<div class="user-bar-btn">
+			<ul class="clearfix">
+				<li><a>
+						<p class="font-or">0.00元</p>
+						<p>我的余额</p>
+				</a></li>
+				<li><a>
+						<p class="font-red">0个</p>
+						<p>我的红包</p>
+				</a></li>
+				<li><a>
+						<p class="font-green">0分</p>
+						<p>我的积分</p>
+				</a></li>
+			</ul>
+		</div>
+		<div class="acount-detail">
+			<ul>
+				<li class="li-common"><img src="images/ic_address.png"
+					class="img-lef"> <span class="user-change-font">收货地址</span> <a
+					href="address.html" class="fr"> <span></span>
+				</a></li>
+				<li class="li-common"><img src="images/ic_like.png"
+					class="img-lef"> <span class="user-change-font">我的收藏</span> <a
+					href="collection.html" class="fr"> <span></span>
+				</a></li>
+				<li class="li-common"><img src="images/ic_album.png"
+					class="img-lef"> <span class="user-change-font">美食相册</span> <a
+					href="#" class="fr"> <span></span>
+				</a></li>
+			</ul>
+		</div>
+		<div class="acount-detail">
+			<ul>
+				<li class="li-common"><img src="images/ic_prize.png"
+					class="img-lef"> <span class="user-change-font">推荐有奖</span> <a
+					href="#" class="fr"> <span></span>
+				</a></li>
+				<li class="li-common"><img src="images/ic_mall.png"
+					class="img-lef"> <span class="user-change-font">积分商城</span> <a
+					href="#" class="fr"> <span></span>
+				</a></li>
+				<li class="li-common"><img src="images/ic_points.png"
+					class="img-lef"> <span class="user-change-font">饿了么会员卡</span>
+					<a href="#" class="fr"> <span></span>
+				</a></li>
+			</ul>
+		</div>
+		<!-- 导航行 -->
+		<footer class="e-footer ht">
+			<ul class="e-footer-box">
+				<li><a href="index.html"><i
+						class="iconfont icon-exin e-footer-icon"></i>外卖</a></li>
+				<li><a href="order.html"><i
+						class="iconfont icon-dingdan e-footer-icon"></i>订单</a></li>
+				<li><a href="user.html"><i
+						class="iconfont icon-geren e-footer-icon"></i>我的</a></li>
+			</ul>
+		</footer>
+	</div>
+</body>
+
+</html>

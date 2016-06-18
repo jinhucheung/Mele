@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,user-scalable=no,initial-scale=1.0">
+<title>饿了么-登录页</title>
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet"
+	href="http://at.alicdn.com/t/font_1465275982_6870668.css">
+<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+
+<script type="text/javascript">
+	$().ready(function() {
+		$("#login").click(function() {
+			var username = $("#username").val();
+            var password = $("#password").val();
+
+			$.ajax({
+				url : "http://localhost:8080/mele/apis/UserServlet?func=login",
+				type : "post",
+				data : {"username":username,"password":password},
+				dataType : "json",
+				success : function(res) {
+                   if(res.data){
+                    window.location="user.html";
+                   }
+                    else{
+                       alert("登陆失败");
+                   }
+				},
+                error:function(){
+                    alert("网络连接失败了");
+                }
+			});
+		});
+	});
+</script>
+
+<!--  <script type="text/javascript" src="js/resize.js"></script> -->
+</head>
+
+<body>
+	<div class="e-layout">
+		<div class="login_head">
+			<a class="back-l" href="index.html"></a>
+			<h3>账户登录</h3>
+		</div>
+		<div class="loginbox">
+			<form action="">
+				<div class="_input">
+					<i class="iconfont icon-geren pt"></i> <input type="text"
+						placeholder="会员名 手机号" id="username">
+				</div>
+				<div class="_input">
+					<i class="iconfont icon-suo"></i> <input type="password"
+						placeholder="请输入密码" id="password">
+				</div>
+				<div class="_submit">
+					<input type="button" value="立即登录" id="login">
+				</div>
+			</form>
+		</div>
+		<div class="register">
+			<a href="register.html">免费注册</a>
+		</div>
+
+		<div id="show"></div>
+	</div>
+</body>
+
+</html>

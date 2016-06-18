@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,user-scalable=no,initial-scale=1.0">
+<title>饿了么-定位</title>
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<!--   <script type="text/javascript" src="js/resize.js"></script> -->
+<!-- 高德地图API -->
+<!-- 根据用户IP获取所在城市信息 插件引入
+        <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=0f6d9c494d038b938391ce5974cc145d&plugin=AMap.CitySearch"></script>
+        -->
+<!--根据用户经纬度获取所在城市信息 插件引入-->
+<script type="text/javascript"
+	src="http://webapi.amap.com/maps?v=1.3&key=0f6d9c494d038b938391ce5974cc145d&plugin=AMap.Geocoder"></script>
+<script src="js/location.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+	window.onload = function() {
+		initMap();
+		// getCityInfoByIP();
+	}
+</script>
+
+</head>
+
+<body>
+	<div class="e-layout account-mar">
+		<header class="e-header">
+			<div class="e-header-box account-h">
+				<a class="back-l" href="index.html"></a>
+				<p class="account-p">定位</p>
+			</div>
+		</header>
+		<div class="e-content">
+			<div id="container-map"></div>
+		</div>
+	</div>
+</body>
+
+</html>

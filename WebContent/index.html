@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,user-scalable=no,initial-scale=1.0">
+<title>饿了么-首页</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet"
+	href="http://at.alicdn.com/t/font_1465275982_6870668.css">
+<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<!--根据用户经纬度获取所在城市信息 插件引入-->
+<script type="text/javascript"
+	src="http://webapi.amap.com/maps?v=1.3&key=0f6d9c494d038b938391ce5974cc145d&plugin=AMap.Geocoder"></script>
+<script src="js/location.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	/*用户位置经纬度*/
+	var mLocationLngLat;
+	/*城市编码*/
+	var mCityCode;
+	/*地址信息*/
+	var mAddress;
+
+	//获取cookie中的值
+	mLocationLngLat = get_Cookie("elelocationlnglat");
+	mCityCode = get_Cookie("elelocationcitycode");
+	mAddress = get_Cookie("elelocationaddress");
+
+	$().ready(function() {
+		//根据Cookie请求服务器
+		if (null != mLocationLngLat && null != mAddress && null != mCityCode) {
+			console.log("citycode=" + mCityCode);
+			$("#address").html(mAddress);
+			//请求商家信息
+			requestStoreInfo();
+			//console.log("gotCookie="+mLocationLngLat+"  "+mAddress+"  "+mCityCode);
+			return;
+		}
+
+		//初始化定位组件
+		initGeolocation();
+
+		/*
+		 *回调用户位置信息
+		 */
+		setLocationCallback(function(locationData, cityInfo) {
+			if (null != locationData) {
+				mlocationData = locationData;
+				mLocationLngLat = locationData.position + "";
+				set_Cookie("elelocationlnglat", mLocationLngLat);
+				//console.log("location=" + mLocationLngLat);//用户经纬度
+			}
+			if (null != cityInfo) {
+				var address = cityInfo.city + //
+				cityInfo.district + //
+				cityInfo.township + //
+				cityInfo.street;
+				$("#address").html(address);
+
+				mAddress = address;
+				mCityCode = cityInfo.citycode;
+				//请求商家信息
+				requestStoreInfo();
+
+				set_Cookie("elelocationcitycode", mCityCode);
+				set_Cookie("elelocationaddress", mAddress);
+				console.log("CityCOde=" + mCityCode);
+			}
+		});
+	});
+
+	/*
+	 *请求商家信息
+	 */
+	function requestStoreInfo() {
+		$.ajax({
+			url : "http://localhost:8080/mele/apis/StoreServlet",
+			type : "get",
+			data : {
+				func : "fetchAllStoresByCityCode",
+				cityCode : mCityCode
+			},
+			dataType : "json",
+			success : function callback(result) {
+				console.log(result);
+				if ("200" != result.code) {
+					console.log("请求商家信息失败!! resultCode=" + result.code);
+					return;
+				}
+
+				//获取用户经纬度信息
+				var locationlnglat = null;
+				var distance = null;
+				if (null != mLocationLngLat) {
+					var locationArray = mLocationLngLat.split(",");
+					locationlnglat = new AMap.LngLat(locationArray[0],
+							locationArray[1]);
+				}
+
+				$("#storeDiv").html("");
+				for ( var i in result.data) {
+					//计算用户与商家间距离
+					if (null != locationlnglat) {
+						var lnglatArray = result.data[i].latlng.split(",");
+						distance = locationlnglat.distance([ lnglatArray[0],
+								lnglatArray[1] ]);
+						distance = Math.ceil(distance); //取整
+						if (distance > 10000) { //不显示距离10000米以上的商家
+							continue;
+						}
+					} else {
+						distance = " NA ";
+					}
+
+					var divcode = build_storeDiv(//
+					result.data[i].storeId,//
+					result.data[i].storeLogo, //
+					result.data[i].storeName,//
+					result.data[i].startPrice, //
+					result.data[i].transportPrice,//
+					distance,//
+					result.data[i].orderNums);
+					$("#storeDiv").append(divcode);
+				}
+			}
+		});
+
+		//判断用户是否登录
+		$.ajax({
+			url : "http://localhost:8080/mele/apis/UserServlet",
+			type : "get",
+			data : {
+				func : "isLogining",
+			},
+			dataType : "json",
+			success : function callback(result) {
+				//console.log(result);
+				if ("200" == result.code) {
+					$("#login").css('display', 'none');
+					$("#register").css('display', 'none');
+					$('#logout').css('display', '');
+				} else {
+					$("#login").css('display', '');
+					$("#register").css('display', '');
+					$("#logout").css('display', 'none');
+				}
+			}
+		});
+		
+		//注销当前用户
+		$("#logout").click(function() {
+			$.ajax({
+				url : "http://localhost:8080/mele/apis/UserServlet",
+				type : "get",
+				data : {
+					func : "logout",
+				},
+				dataType : "json",
+				success : function callback(result) {
+					//console.log(result);
+					if ("200" == result.code) {
+						$("#login").css('display', '');
+						$("#register").css('display', '');
+						$("#logout").css('display', 'none');
+					} else {
+						$("#login").css('display', 'none');
+						$("#register").css('display', 'none');
+						$('#logout').css('display', '');
+					}
+				}
+			});
+		});
+	}
+</script>
+<!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
+<!--    <script type="text/javascript" src="js/resize.js"></script> -->
+</head>
+
+<body>
+	<div class="e-layout mar-top">
+		<header class="e-header">
+			<div id="Con"></div>
+			<div class="e-header-box ht">
+				<a href="location.html" class="btn btn-l">定位</a>
+				<form action="" class="form-style">
+					<span class="icon-search" id="search"></span> <span class="address"
+						id="address" style="display: none"></span> <input id="search_box"
+						type="search" placeholder="请输入商家或商品的名称" />
+				</form>
+				<!-- visibility: hidden-->
+				<a href="login.html" class="btn btn-r-l" id="login">登录</a> <a
+					href="register.html" class="btn btn-r-r" id="register">注册</a> <a
+					href="#" class="btn btn-r-r" style="display: none" id="logout">注销</a>
+			</div>
+		</header>
+
+		<div class="slide" id="slide3">
+			<ul id="slideAdd">
+				<li><a href="#"> <img src="images/u114_state0.png" alt="">
+				</a></li>
+				<li><a href="#"> <img src="images/u114_state1.png" alt="">
+				</a></li>
+				<li><a href="#"> <img src="images/u114_state2.png" alt="">
+				</a></li>
+			</ul>
+			<div class="dot">
+				<span></span> <span></span> <span></span>
+			</div>
+		</div>
+		<!-- 导航行 -->
+		<nav class="e-nav">
+			<ul class="clearfix">
+				<li><a href="food.html?id=0&name=美食"> <img
+						src="images/delights.png" />
+						<p>美食</p>
+				</a></li>
+				<li><a href="food.html?id=1&name=快餐便当"> <img
+						src="images/snack.png" alt="" />
+						<p>快餐便当</p>
+				</a></li>
+				<li><a href="food.html?id=2&name=特色菜系"> <img
+						src="images/special-food.png" alt="" />
+						<p>特色菜系</p>
+				</a></li>
+				<li><a href="food.html?id=3&name=异国料理"> <img
+						src="images/foreign-cuisine.png" alt="" />
+						<p>异国料理</p>
+				</a></li>
+				<li><a href="food.html?id=4&name=小吃夜宵"> <img
+						src="images/supper.png" alt="" />
+						<p>小吃夜宵</p>
+				</a></li>
+				<li><a href="food.html?id=5&name=甜品饮品"> <img
+						src="images/druk.jpeg" alt="" />
+						<p>甜品饮品</p>
+				</a></li>
+				<li><a href="food.html?id=6&name=果蔬生鲜"> <img
+						src="images/fruit.jpeg" alt="" />
+						<p>果蔬生鲜</p>
+				</a></li>
+				<li><a href="food.html?id=7&name=鲜花蛋糕"> <img
+						src="images/cake.jpeg" alt="" />
+						<p>鲜花蛋糕</p>
+				</a></li>
+			</ul>
+		</nav>
+		<main class="e-product">
+		<h3 class="index-title">
+			<span>附近商家</span>
+		</h3>
+		<div id="storeDiv">
+			<section class="rstblock clearfix">
+				<div class="leftArea">
+					<img
+						src="https://fuss10.elemecdn.com/0/ab/1de188141fdf03952acf7019a8fa9jpg.jpg?imageMogr2/thumbnail/70x70/format/webp/quality/85">
+					<span class="distance">689米</span>
+				</div>
+				<a href="client.html">
+					<div class="rightArea">
+						<h4 class="rstblock-name">台式风味</h4>
+						<div class="rstblock-monthsales">已售0单</div>
+						<div class="rstblock-cost">20元起送 /0元配送</div>
+						<div class="rstblock-activity">
+							<span class="iconsub">减</span> <span class="iconfirst">首</span> <span
+								class="iconbuy">付</span>
+						</div>
+				</a>
+			</section>
+			<section class="rstblock clearfix">
+				<div class="leftArea">
+					<img
+						src="https://fuss10.elemecdn.com/6/ef/51a774cd7ed8888a230613987b01bjpeg.jpeg?imageMogr/quality/75/format/webp/thumbnail/!96x96r/gravity/Center/crop/96x96/">
+					<span class="distance">326米</span>
+				</div>
+				<a href="client.html">
+					<div class="rightArea">
+						<h4 class="rstblock-name">佳琪饭店</h4>
+						<div class="rstblock-monthsales">已售0单</div>
+						<div class="rstblock-cost">20元起送 /0元配送</div>
+						<div class="rstblock-activity">
+							<span class="iconsub">减</span> <span class="iconfirst">首</span> <span
+								class="iconbuy">付</span>
+						</div>
+				</a>
+			</section>
+		</div>
+		</main>
+		<footer class="e-footer ht">
+			<ul class="e-footer-box">
+				<li><a href="index.html"><i
+						class="iconfont icon-exin e-footer-icon"></i>外卖</a></li>
+				<li><a href="order.html"><i
+						class="iconfont icon-dingdan e-footer-icon"></i>订单</a></li>
+				<li><a href="user.html"><i
+						class="iconfont icon-geren e-footer-icon"></i>我的</a></li>
+			</ul>
+		</footer>
+	</div>
+	<!-- 轮播图 -->
+	<script src="js/jquery-1.12.3.min.js"></script>
+	<script src="js/swipeSlide.min.js"></script>
+	<script>
+		$(function() {
+			$('#slide3')
+					.swipeSlide(
+							{
+								continuousScroll : true,
+								speed : 3000,
+								transitionType : 'cubic-bezier(0.22, 0.69, 0.72, 0.88)',
+								firstCallback : function(i, sum, me) {
+									me.find('.dot').children().first()
+											.addClass('cur');
+								},
+								callback : function(i, sum, me) {
+									me.find('.dot').children().eq(i).addClass(
+											'cur').siblings()
+											.removeClass('cur');
+								}
+							});
+		});
+
+		/**
+		 * 搜索框的点击事件
+		 */
+		$("#search").click(function() {
+			$(".address").toggle();
+
+			$("#search_box").toggle();
+			$("#search_box").focus();
+		});
+	</script>
+</body>
+
+</html>

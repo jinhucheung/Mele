@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,user-scalable=no,initial-scale=1.0">
+<title>饿了么-注册</title>
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<!--   <link rel="stylesheet" href="http://at.alicdn.com/t/font_1465275982_6870668.css"> -->
+<!--  <script type="text/javascript" src="js/resize.js"></script> -->
+<style>
+.formtips {
+	display: inline-block;
+	color: #3fb8eb;
+	font-size: 16px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+#submit {
+	outline: none;
+}
+</style>
+</head>
+
+<body>
+	<div class="e-layout">
+		<div class="login_head">
+			<a class="back-l" href="index.html"></a>
+			<h3>注册</h3>
+		</div>
+		<div class="register-box">
+			<form action="" id="register">
+				<div class="register-input">
+					<input type="text" placeholder="请填写用户名" formtarget="_top"
+						id="username" class="required" /> <input type="password"
+						placeholder="请设置用户密码" formtarget="_top" id="password"
+						class="required" />
+				</div>
+				<div class="_submit">
+					<input type="button" id="submit" value="注册">
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+<script>
+$(function() {
+    // $(":input").focus(function() {
+    //     $(this).addClass("focus");
+    // }).blur(function() {
+    //     $(this).removeClass("focus");
+    // });
+    $("form :input.required").each(function() {
+        $("form :input").blur(function() {
+            $(this).parent().find(".formtips").remove();
+            if ($(this).is("#username")) { //用户名
+                if (this.value == "" || this.value.length < 6 || this.value.length > 16) {
+                    var errorMsg = "请输入6-16位的用户名.";
+                    $(this).parent().append("<span class='formtips'>" + errorMsg + "</span>");
+                }
+            }
+            if ($(this).is("#passward")) { //密码
+                if (this.value == "") {
+                    var errorMsg = "密码不能为空";
+                    $(this).parent().append("<span class='formtips'>" + errorMsg + "</span>");
+                }
+            }
+        });
+    }).keyup(function() {
+        $(this).triggerHandler("blur");
+    }).focus(function() {
+        $(this).triggerHandler("blur");
+    });
+    /*$("#submit").click(function() { //提交
+        $("form .required:input").trigger('blur');
+        var numError = $("form .formtips").length;
+        if (numError) {
+            alert("注册失败")
+        }
+        alert("注册成功");
+    });
+*/
+
+    $("#submit").click(function() {
+        $("form .required:input").trigger('blur');
+        var numError = $("form .formtips").length;
+        if(numError) {
+        	console.log("Hello4124");
+        	return;}
+        var maccount = $("#username").val();
+        var mpassword = $("#password").val();
+        console.log(maccount+":"+mpassword);
+        
+        $.ajax({
+            url : "http://localhost:8080/mele/apis/UserServlet?func=addUser&tel=0&email=0&paypassword=0&headic=HiEle.png&level=1",
+            type : "post",
+            data : {account:maccount,password:mpassword},
+            dataType : "json",
+            success : function callback(res) {
+                console.log(res);
+                if(res.data){
+                   window.location.href="user.html";
+                }
+                else{
+                    alert("注册失败");
+                }
+            },
+            error:function(){
+                alert("网络连接失败了");
+            }
+        });
+    });
+})
+</script>
+
+</html>
