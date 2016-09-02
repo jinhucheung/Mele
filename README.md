@@ -15,6 +15,9 @@ Mele基于`Html/CSS+ajax+servlet+JDBC`实现,数据库使用Mysql
 - 商家信息与菜单信息静态写入数据库中
 - 实现购物车以及图片轮播功能
 
+预览图
+-------------------------
+![](https://github.com/HiKumho/Mele/blob/master/pre-index.png?raw=true)![](https://github.com/HiKumho/Mele/blob/master/pre-order.png?raw=true)
 
 
 
