@@ -23,7 +23,7 @@ UML图如下
 预览图
 -------------------------
 
-<image src="https://github.com/HiKumho/Mele/blob/master/pre-index.png?raw=true" width="47.5%"/>
+<image src="https://github.com/HiKumho/Mele/blob/master/pre-index.png?raw=true" width="47%"/>
 ![](https://github.com/HiKumho/Mele/blob/master/pre-user.png?raw=true)
 
 
