@@ -20,7 +20,7 @@ UML图如下
 - 实现购物车以及图片轮播功能
 
 
-预览图
+预览
 -------------------------
 
 <image src="https://github.com/HiKumho/Mele/blob/master/pre-index.png?raw=true" width="47%"/>
