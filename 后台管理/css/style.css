@@ -1,0 +1,124 @@
+.bold{
+    font-weight: bold;
+}
+*{margin: 0;padding: 0}
+body{
+    background: url("../image/bg.png");
+}
+iframe{
+    width: 750px;
+    height: 500px;
+    overflow: scroll;
+}
+.storeLogo{
+    height: 40px;
+    border:none;
+}
+.headBar{
+    width: 100%;
+    height: 50px;
+    background: url("../image/indexbg.png") repeat-x;
+    border-bottom: 1px solid #CCCCCB;
+}
+.comWidth{
+    width: 960px;
+    margin: 0 auto;
+    line-height: 50px;
+}
+.comWidth .sysTitle{
+    color: #0B739B;
+    font-size: 20px;
+    font-weight: bold;
+}
+.comWidth .logo{
+    height: 25px;
+    vertical-align: middle;
+}
+.content{
+    width: 960px;
+    margin: 25px auto;
+    overflow: hidden;
+    border: 1px solid #CCCCCB;
+    background: #FFF;
+}
+.leftArea{
+    width: 15%;
+    height: 100%;
+    float: left;
+    margin:30px 20px ;
+}
+.rightArea {
+    width: 78%;
+    background: #eee;
+    height: 100%;
+    float: right;
+    margin-top: 30px;
+    margin-right: 20px ;
+}
+.List dt{
+    height: 35px;
+    width: 100%;
+    background: #6190C4;
+    line-height: 35px;
+    color: #FFF;
+    font-weight: bold;
+    border:1px dotted #EEE;
+}
+.List dd{
+    height: 35px;
+    width: 100%;
+    border:1px dotted #EEE;
+    line-height: 35px;
+    font-weight: bold;
+    text-align:center;
+}
+.List .active{
+background: #EEEEEE;
+}
+.List a{
+    text-decoration: none;
+    color: #006699;
+}
+.List a:hover{
+color: #f07373;
+}
+.storeArea td,.storeArea th{
+    padding:5px 10px 5px;
+}
+.storeArea a{
+    display: inline-block;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background: #0B739B;
+    color: #FFF;
+    font-weight: bold;
+    margin: 2px 2px;
+
+}
+.storeArea a:hover{
+    color: #f00;
+}
+ul input{
+    width: 300px;
+    height: 40px;
+    line-height: 45px;
+    padding-left: 32px;
+  border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 10px 10px;
+}
+ul li{
+    list-style: none;
+}
+   .btn-add{
+    width: 90px;
+    height: 40px;
+    border-radius: 5px;
+    background: #009DD9;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    margin-left: 20px;
+}

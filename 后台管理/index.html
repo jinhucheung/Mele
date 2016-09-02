@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+    <link href="css/css.css" rel="stylesheet" type="text/css"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+ <div class="headBar">
+     <div class="comWidth">
+         <img class="logo" src="image/logo.png" >
+         <span class="sysTitle">后台管理系统</span>
+     </div>
+ </div>
+<div class="content">
+    <div class="leftArea">
+        <dl class="List list-sysMes">
+            <dt>系统管理</dt>
+            <dd ><a href="sysMes.html" target="mainFrame">系统信息</a></dd>
+            <dd><a href="aboutUs.html" target="mainFrame">关于我们</a></dd>
+
+
+        </dl>
+   <dl class="List list-order">
+       <dt >订单管理</dt>
+
+       <dd><a href="orderList.html" target="mainFrame">订单列表</a></dd>
+
+   </dl>
+        <dl class="List list-user">
+            <dt >用户管理</dt>
+            <dd><a href="userList.html" target="mainFrame">用户列表</a></dd>
+            <dd><a href="addUser.html" target="mainFrame">添加用户</a></dd>
+        </dl>
+        <dl class="List list-store">
+            <dt >商家管理</dt>
+            <dd><a href="addStore.html" target="mainFrame">添加商家</a></dd>
+            <dd><a href="storeArea.html" target="mainFrame">商家列表</a></dd>
+
+        </dl>
+    </div>
+    <div class="rightArea">
+        <iframe src="sysMes.html"  frameborder="0" name="mainFrame"></iframe>
+    </div>
+</div>
+<script>
+    MenuToggle();
+function MenuToggle(){
+
+    $(".list-sysMes >dt").click(
+            function(){
+                $(".list-sysMes >dd").toggle();
+            }
+    );
+    $(".list-store >dt").click(
+            function(){
+                $(".list-store >dd").toggle();
+            }
+    );
+    $(".list-user >dt").click(
+            function(){
+                $(".list-user >dd").toggle();
+            }
+    );
+    $(".list-order >dt").click(
+            function(){
+                $(".list-order >dd").toggle();
+            }
+    );
+}
+
+</script>
+</body>
+</html>

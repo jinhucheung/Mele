@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+    <link href="css/css.css" rel="stylesheet" type="text/css"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+
+    </style>
+    <title></title>
+</head>
+<body>
+
+<table cellspacing="0" class="storeArea" id="orderList">
+    <th colspan="7">订单列表</th>
+    <!--http://localhost:8080/mele/apis/OrderServlet?func=fetchAllOrder-->
+</table>
+<script>
+    $.ajax({
+
+        url : "http://localhost:8080/mele/apis/OrderServlet?func=fetchAllOrder",
+        type : "get",
+        data : {},
+        dataType : "json",
+        async:false,
+        success : function(res) {
+            for(var i in res.data){
+                console.log(res.data[i]);
+                var orderId,username,orderTime,notic,storeName,address;
+                orderId=res.data[i].orderCode;
+                username= res.data[i].userAccount;
+                orderTime=res.data[i].orderTime;
+                notic=res.data[i].userNote;
+                storeName=res.data[i].mStore.storeName;
+                address=res.data[i].mStore.address;
+                $("#orderList").append(getTRModel(orderId,username,orderTime,notic,storeName,address));
+            }
+        },
+        error:function(){
+            alert("哦no,网络连接失败了");
+        }
+    });
+
+    function getTRModel(orderId,username,orderTime,notic,storeName,address){
+    var model="<tr> <td>" +
+            orderId +
+            "</td> <td>" +
+            username +
+            "</td> <td>" +
+            orderTime +
+            "</td> <td>" +
+            notic +
+            "</td> <td>" +
+            storeName +
+            "</td> <td>" +
+            address +
+            "</td> </tr>";
+        return model;
+    }
+</script>
+</body>
+</html>

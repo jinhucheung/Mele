@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="css/css.css" rel="stylesheet" type="text/css"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+<table cellspacing="0" class="storeArea" id="userList">
+    <th colspan="7">订单列表</th>
+
+    <tr>
+        <td class="bold">用户名/账户</td>
+
+        <td class="bold">手机</td>
+        <td class="bold">邮箱</td>
+        <td class="bold">头像</td>
+        <td class="bold">等级</td>
+    </tr>
+
+
+
+</table>
+<script>
+    $.ajax({
+
+        url : "http://localhost:8080/mele/apis/UserServlet?func=fetchAllUser",
+        type : "get",
+        data : {},
+        dataType : "json",
+        async:false,
+        success : function(res) {
+            console.log(res);
+             var data= res.data;
+            for(var i in data){
+                $("#userList").append(theMode(data[i].account,data[i].tel,data[i].email,data[i].headic,data[i].level))
+            }
+        },
+        error:function(){
+            alert("哦no,网络连接失败了");
+        }
+    });
+    function theMode(username,phone,email,logo,state){
+      var model=" <tr> <td>" +
+              username +
+              "</td> " +
+
+              "<td>" +
+              phone +
+              "</td> <td>" +
+              email +
+              "</td> <td><img hwight='30' src='" +
+              "http://localhost:8080/mele/data/img/user/" +
+              logo +
+              ""+
+              "'></td> <td>" +
+              state +
+              "</td> </tr>"
+        return model;
+    }
+</script>
+</body>
+</html>

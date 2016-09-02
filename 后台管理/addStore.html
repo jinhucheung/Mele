@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+    <link href="css/css.css" rel="stylesheet" type="text/css"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        .addStoreMes{
+            width: 500px;
+            margin: 10px auto;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+
+
+<ul class="addStoreMes">
+
+    <li><input type="text" placeholder="商家名称" id="val1"></li>
+    <li><input type="text" placeholder="商家地址 " id="val2"></li>
+    <li><input type="text" placeholder="营业时间 " id="val3"></li>
+    <li><input type="text" placeholder="起送价" id="val4"></li>
+    <li><input type="text" placeholder="交通运费" id="val5"></li>
+    <li> <button class="btn-add" id="btn-addStore">添加商家</button></li>
+
+</ul>
+<script>
+    $("#btn-addStore").click(
+            function () {
+                $.ajax({
+                    url:"http://localhost:8080/mele/apis/StoreServlet?func=addStore&storeLogo=shanghai.jpeg&tel=1&cityCode=1&latlng=1&notice=1&cheapenNotice=1&newuserNotice=1&storeType=1&uAccount=1",
+                    type : "get",
+                    data : {"storeId":new Date().getTime(),"storeName":$("#val1").val(),
+                    "address":$("#val2").val(),"startPrice":$("#val4").val(),
+                        "shopHours":$("#val3").val(),
+                       "transportPrice":$("#val5").val()
+                    },
+                    dataType : "json",
+                    async:false,
+                    success : function(res) {
+                        console.log(res);
+                    },
+                    error:function(){
+                        alert("网络连接失败了");
+                    }
+                });
+            }
+    );
+
+</script>
+</body>
+</html>

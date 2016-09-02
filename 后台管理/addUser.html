@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+    <link href="css/css.css" rel="stylesheet" type="text/css"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        .addUser{
+            width: 520px;
+            margin: 20px auto;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+
+
+<ul class="addUser">
+    <li><input type="text" placeholder="用户名/账户" id="mAccount"></li>
+    <li><input type="password" placeholder="密码" id="mPassword"></li>
+    <li><input type="password" placeholder="确认密码" id="rmPassword"></li>
+    <li> <button class="btn-add" id="btn-addUser">立即添加</button></li>
+</ul>
+<script>
+//
+$("#btn-addUser").click(
+        function(){
+            if($("#mPassword").val()!=$("#rmPassword").val()){
+                alert("两次输入不一致");
+                window.location="addUser.html";
+                return;
+            }
+            $.ajax({
+                url:"http://localhost:8080/mele/apis/UserServlet?func=addUser&tel=18813875123&email=312421515@qq.com&paypassword=1&headic=HiEle.png&level=1",
+                type : "get",
+                data : {"account":$("#mAccount").val(),"password":$("#mPassword").val()},
+                dataType : "json",
+                async:false,
+                success : function(res) {
+                    if(res){
+                        alert("成功添加");
+                    }
+                },
+                error:function(){
+                    alert("哦no,网络连接失败了");
+                }
+            });
+        }
+);
+
+
+</script>
+</body>
+</html>
