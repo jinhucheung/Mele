@@ -1,0 +1,125 @@
+一.城市
+
+1.1.根据城市编码获取城市信息
+http://localhost:8080/mele/apis/CityServlet?func=getCityByCityCode&cityCode=0753
+1.2 获取所有城市
+http://localhost:8080/mele/apis/CityServlet?func=getAllCity
+1.3 添加城市
+http://localhost:8080/mele/apis/CityServlet?func=addcity&cityCode=3939&cityName=CITY
+1.4 删除城市
+http://localhost:8080/mele/apis/CityServlet?func=deleteCity&cityCode=07gg
+1.5 删除所有城市
+http://localhost:8080/mele/apis/CityServlet?func=deleteAllCities
+1.6 更新城市名称
+http://localhost:8080/mele/apis/CityServlet?func=updateCityName&cityCode=3939&cityName=CITY
+1.7 获取所有城市
+http://localhost:8080/mele/apis/CityServlet?func=fetchAllCities
+1.8 根据城市名称获取城市
+http://localhost:8080/mele/apis/CityServlet?func=fetchCityByCityName&cityName=CITY 
+
+二.订单(****)
+
+2.1 添加订单(用户或管理员需登录才能操作)
+http://localhost:8080/mele/apis/OrderServlet?func=addOrder&userAccount=2&orderCode=2&storeId=1&userAddressId=1&orderFoodId=1&orderFoodPriceXNum=1&userNote=1&orderDate=1&comment=1
+2.2 删除订单(用户或管理员需登录才能操作)
+http://localhost:8080/mele/apis/OrderServlet?func=delOrder&orderCode=1
+2.3 删除用户所有的订单(用户或管理员需登录才能操作)
+http://localhost:8080/mele/apis/OrderServlet?func=deleteAllOrdersInAccount&account=2
+2.4 删除商家的所有订单
+http://localhost:8080/mele/apis/OrderServlet?func=deleteAllOrdersInStore&storeId=2
+2.5 更新订单的评论(用户或管理员需登录才能操作)
+http://localhost:8080/mele/apis/OrderServlet?func=updateOrderComment&orderCode=2016060712000123&comment=goodfood
+2.6 获取订单号信息
+http://localhost:8080/mele/apis/OrderServlet?func=fetchOrder&orderCode=2016060712000123
+2.7 获取用户的所有订单信息(用户或管理员需登录才能操作)
+http://localhost:8080/mele/apis/OrderServlet?func=fetchAllOrderInAccount&account=HiKu
+2.8 根据商家id获取商家的信息
+http://localhost:8080/mele/apis/OrderServlet?func=fetchAllOrderInStore&storeId=1
+2.9 获取所有订单
+http://localhost:8080/mele/apis/OrderServlet?func=fetchAllOrder
+3.0 缓存一个订单数据
+http://localhost:8080/mele/apis/OrderServlet?func=cacheOrder&storeId=1&orderFoodId=1;4;6;&orderFoodPriceXNum=3x2;6.5x1;5.5x2;
+3.1 读取已缓存订单的数据
+http://localhost:8080/mele/apis/OrderServlet?func=readCacheOrder
+3.2 提交一个缓存订单
+http://localhost:8080/mele/apis/OrderServlet?func=submitCacheOrder
+
+三. 商家菜单
+
+
+3.1 添加菜单
+http://localhost:8080/mele/apis/StoreMenuServlet?func=addFood&storeId=122&foodId=1393&foodName=188&foodPrices=1&foodType=1&foodIc=9090
+3.2 删除商家的食物
+http://localhost:8080/mele/apis/StoreMenuServlet?func=deleteFood&storeId=122&foodId=1393
+3.3 删除所有食物
+http://localhost:8080/mele/apis/StoreMenuServlet?func=deleteAllFoods
+3.4 更新食物名称
+http://localhost:8080/mele/apis/StoreMenuServlet?func=updateFoodName&storeId=1&foodId=1&foodName=123
+3.5 更新食物价格
+http://localhost:8080/mele/apis/StoreMenuServlet?func=updateFoodPrices&storeId=1&foodId=1&foodPrices=1999
+3.6 更新食物类型
+http://localhost:8080/mele/apis/StoreMenuServlet?func=updateFoodType&&storeId=1&foodId=1&foodType=dddd
+3.7 更新食物图标
+http://localhost:8080/mele/apis/StoreMenuServlet?func=updateFoodIc&&storeId=13&foodId=23&foodIc=hhhh.c
+3.8  修改商家菜式信息(尚未测试)
+http://localhost:8080/mele/apis/StoreMenuServlet?
+3.9 获取所有食物
+http://localhost:8080/mele/apis/StoreMenuServlet?func=fetchAllFoods
+3.10 根据商家Id获取所有菜式信息
+http://localhost:8080/mele/apis/StoreMenuServlet?func=fetchAllFoodsByStoreId&storeId=1222
+3.11 获取指定价格区间的所有菜式信息
+http://localhost:8080/mele/apis/StoreMenuServlet?func=fetchAllFoodsByFoodPrices&minPrices=0&maxPrices=12&storeId=1
+3.12 根据商家Id及菜式Id获取菜式信息
+http://localhost:8080/mele/apis/StoreMenuServlet?&func=fetchAllFoodsByFoodType&foodType=1&storeId=1
+3.13 根据商家Id及一组菜式Id获取菜式信息
+http://localhost:8080/mele/apis/StoreMenuServlet?&func=fetchFood&foodId=4&storeId=9
+3.14 获取指定商家的所有菜式类型
+http://localhost:8080/mele/apis/StoreMenuServlet?&func=fetchAllFoodTypeByStoreId&storeId=9
+
+四.商家
+
+
+4.1添加商家
+http://localhost:8080/mele/apis/StoreServlet?func=addStore&storeId=121&storeName=1&storeLogo=1&tel=1&cityCode=1&shopHours=1&latlng=1&startPrice=1&transportPrice=1&notice=1&cheapenNotice=1&newuserNotice=1&storeType=1&uAccount=1&address=1
+4.2根据商家ID删除商家
+http://localhost:8080/mele/apis/StoreServlet?func=deleteStore&storeId=1
+4.3 根据城市编号删除商家
+http://localhost:8080/mele/apis/StoreServlet?func=deleteStoreByCityCode&cityCode=4
+4.3 删除所有商家
+http://localhost:8080/mele/apis/StoreServlet?func=deleteAllStores
+4.4 更新商家名子
+http://localhost:8080/mele/apis/StoreServlet?func=updateStoreName&storeName=Username&storeId=10
+4.4 更新商家logo
+http://localhost:8080/mele/apis/StoreServlet?func=updateStoreLogo&storeId=22&storeLogo=233.jpg
+4.5 更新商家营业时间
+http://localhost:8080/mele/apis/StoreServlet?func=updateStoreShopHours&storeId=22&shopHours=13:999
+4.6 更新商家的起送价以及运费
+http://localhost:8080/mele/apis/StoreServlet?func=updateStorePrice&storeId=22&startPrice=90&transportpricePrice=999
+4.7 更新商家的提示信息
+http://localhost:8080/mele/apis/StoreServlet?func=updateStoreNotice&storeId=22&notice=2&cheapenNotice=3&newUserNotice=NNNNN
+4.8 更新商家电话
+http://localhost:8080/mele/apis/StoreServlet?func=updateStoreTel&storeId=22&tel=333331111
+4.9 获取所有商家
+http://localhost:8080/mele/apis/StoreServlet?func=fetchAllStores
+4.10 根据城市编号获取商家
+http://localhost:8080/mele/apis/StoreServlet?func=fetchAllStoresByCityCode&cityCode=0753
+4.11 根据起送价格区间获取商家
+http://localhost:8080/mele/apis/StoreServlet?func=fetchAllStoresByStartPrice&minPrice=7&maxPrice=8
+4.12  查找商家类型信息(未测试)
+http://localhost:8080/mele/apis/StoreServlet?func=fetchAllStoresByTypeId&storeTypeId=99
+4.13 根据商家ID获取商家
+http://localhost:8080/mele/apis/StoreServlet?func=fetchStoreByStoreId&storeId=10
+4.14 根据商家类型Id获取指定城市所有商家
+http://localhost:8080/mele/apis/StoreServlet?func=fetchAllStoresByCityCodeNTypeId&storeTypeId=1&cityCode=0753
+4.15 根据起送价获取指定城市所有商家
+http://localhost:8080/mele/apis/StoreServlet?func=fetchAllStoresByCityCodeNStartPrice&minPrice=7&maxPrice=8&cityCode=0753
+
+五.用户
+5.1 添加用户(POST方式)
+http://localhost:8080/mele/apis/UserServlet?func=addUser&account=1&password=1&tel=1&email=1&paypassword=1&headic=1&level=2
+5.2 用户登陆(POST方式)
+http://localhost:8080/mele/apis/UserServlet?func=login
+5.3 获取当前登录的用户名
+http://localhost:8080/mele/apis/UserServlet?func=getCurAccount
+5.4 用户注销
+http://localhost:8080/mele/apis/UserServlet?func=logout
