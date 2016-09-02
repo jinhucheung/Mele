@@ -6,6 +6,10 @@ Mele是仿照外卖o2o平台饿了么设计开发的一个Web App
 -------------------------
 Mele基于`Html/CSS+ajax+servlet+JDBC`实现,数据库使用Mysql
 
+UML图如下
+
+<image src="https://github.com/HiKumho/Mele/blob/master/uml.png?raw=true" width="90%"/>
+
 功能说明
 -------------------------
 - 利用高德地图API实现用户定位
@@ -15,9 +19,12 @@ Mele基于`Html/CSS+ajax+servlet+JDBC`实现,数据库使用Mysql
 - 商家信息与菜单信息静态写入数据库中
 - 实现购物车以及图片轮播功能
 
+
 预览图
 -------------------------
-![](https://github.com/HiKumho/Mele/blob/master/pre-index.png?raw=true)![](https://github.com/HiKumho/Mele/blob/master/pre-order.png?raw=true)
+
+<image src="https://github.com/HiKumho/Mele/blob/master/pre-index.png?raw=true" width="47.5%"/>
+![](https://github.com/HiKumho/Mele/blob/master/pre-user.png?raw=true)
 
 
 
