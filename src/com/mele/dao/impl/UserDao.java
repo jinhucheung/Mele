@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import javafx.scene.text.Text;
 
 import com.mele.control.DbContentProvider;
 import com.mele.dao.IUserDao;
